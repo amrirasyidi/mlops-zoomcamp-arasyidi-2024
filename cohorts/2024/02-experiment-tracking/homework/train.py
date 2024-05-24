@@ -11,12 +11,12 @@ def load_pickle(filename: str):
         return pickle.load(f_in)
 
 
-@click.command()
-@click.option(
-    "--data_path",
-    default="./output",
-    help="Location where the processed NYC taxi trip data was saved"
-)
+# @click.command()
+# @click.option(
+#     "--data_path",
+#     default="./output",
+#     help="Location where the processed NYC taxi trip data was saved"
+# )
 def run_train(data_path: str):
 
     X_train, y_train = load_pickle(os.path.join(data_path, "train.pkl"))
