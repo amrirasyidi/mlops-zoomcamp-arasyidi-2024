@@ -17,17 +17,17 @@ def load_pickle(filename: str):
         return pickle.load(f_in)
 
 
-@click.command()
-@click.option(
-    "--data_path",
-    default="./output",
-    help="Location where the processed NYC taxi trip data was saved"
-)
-@click.option(
-    "--num_trials",
-    default=15,
-    help="The number of parameter evaluations for the optimizer to explore"
-)
+# @click.command()
+# @click.option(
+#     "--data_path",
+#     default="./output",
+#     help="Location where the processed NYC taxi trip data was saved"
+# )
+# @click.option(
+#     "--num_trials",
+#     default=15,
+#     help="The number of parameter evaluations for the optimizer to explore"
+# )
 def run_optimization(data_path: str, num_trials: int):
 
     X_train, y_train = load_pickle(os.path.join(data_path, "train.pkl"))
@@ -35,10 +35,14 @@ def run_optimization(data_path: str, num_trials: int):
 
     def objective(params):
 
-        rf = RandomForestRegressor(**params)
-        rf.fit(X_train, y_train)
-        y_pred = rf.predict(X_val)
-        rmse = mean_squared_error(y_val, y_pred, squared=False)
+        with mlflow.start_run():
+            mlflow.set_tag("model", "RandomForestRegressor")
+            rf = RandomForestRegressor(**params)
+            rf.fit(X_train, y_train)
+            y_pred = rf.predict(X_val)
+            rmse = mean_squared_error(y_val, y_pred, squared=False)
+            mlflow.log_params(params)
+            mlflow.log_metric("rmse", rmse)
 
         return {'loss': rmse, 'status': STATUS_OK}
 
@@ -62,4 +66,7 @@ def run_optimization(data_path: str, num_trials: int):
 
 
 if __name__ == '__main__':
+    # mlflow.set_tracking_uri("http://127.0.0.1:5000")
+    # mlflow.set_experiment("random-forest-hyperopt")
+    
     run_optimization()
