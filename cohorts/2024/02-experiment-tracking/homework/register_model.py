@@ -48,18 +48,18 @@ def tryeval(val):
         pass
     return val
 
-# @click.command()
-# @click.option(
-#     "--data_path",
-#     default="./output",
-#     help="Location where the processed NYC taxi trip data was saved"
-# )
-# @click.option(
-#     "--top_n",
-#     default=5,
-#     type=int,
-#     help="Number of top models that need to be evaluated to decide which one to promote"
-# )
+@click.command()
+@click.option(
+    "--data_path",
+    default="./output",
+    help="Location where the processed NYC taxi trip data was saved"
+)
+@click.option(
+    "--top_n",
+    default=5,
+    type=int,
+    help="Number of top models that need to be evaluated to decide which one to promote"
+)
 def run_register_model(data_path: str, top_n: int):
 
     client = MlflowClient()

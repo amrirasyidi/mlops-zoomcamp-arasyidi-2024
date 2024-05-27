@@ -13,12 +13,12 @@ def load_pickle(filename: str):
         return pickle.load(f_in)
 
 
-# @click.command()
-# @click.option(
-#     "--data_path",
-#     default="./output",
-#     help="Location where the processed NYC taxi trip data was saved"
-# )
+@click.command()
+@click.option(
+    "--data_path",
+    default="./output",
+    help="Location where the processed NYC taxi trip data was saved"
+)
 def run_train(data_path: str):
     # enable autologging
     mlflow.sklearn.autolog()
@@ -39,8 +39,8 @@ def run_train(data_path: str):
 
 
 if __name__ == '__main__':
-    MLFLOW_TRACKING_URI = "sqlite:///mlflow.db"
+    # MLFLOW_TRACKING_URI = "sqlite:///mlflow.db"
 
-    client = MlflowClient(tracking_uri=MLFLOW_TRACKING_URI)
+    # client = MlflowClient(tracking_uri=MLFLOW_TRACKING_URI)
     # client.search_experiments()
     run_train()
