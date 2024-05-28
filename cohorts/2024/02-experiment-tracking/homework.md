@@ -6,6 +6,15 @@ model management.
 
 ## Q1. Install MLflow
 
+### Solution
+```
+# this assumes conda is installed
+conda create -n <env_name> python=3.9
+conda activate <env_name>
+pip install mlflow
+mlflow --version
+```
+
 To get started with MLflow you'll need to install the MLflow Python package.
 
 For this we recommend creating a separate Python environment, for example, you can use [conda environments](https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-envs), and then install the package there with `pip` or `conda`.
@@ -17,6 +26,12 @@ What's the version that you have?
 
 
 ## Q2. Download and preprocess the data
+
+### Solution
+```
+# run from /cohorts
+python 2024/02-experiment-tracking/homework/preprocess_data.py --raw_data_path ./data --dest_path ./output
+```
 
 We'll use the Green Taxi Trip Records dataset to predict the duration of each trip. 
 
@@ -48,9 +63,18 @@ How many files were saved to `OUTPUT_FOLDER`?
 
 ## Q3. Train a model with autolog
 
+### Solution
+```
+# run from /cohorts
+mlflow ui
+
+# open new terminal, cd to /cohorts
+python 2024/02-experiment-tracking/homework/train.py
+```
+
 We will train a `RandomForestRegressor` (from Scikit-Learn) on the taxi dataset.
 
-We have prepared the training script `train.py` for this exercise, which can be also found in the folder `homework`. 
+We have prepared the training script `train.py` for this exercise, which can be also found in the folder `homework`.
 
 The script will:
 
