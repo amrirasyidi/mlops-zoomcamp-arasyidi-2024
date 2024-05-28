@@ -1,3 +1,4 @@
+import argparse
 import pathlib
 import pickle
 import pandas as pd
@@ -113,7 +114,8 @@ def main_flow(
     """The main training pipeline"""
 
     # MLflow settings
-    mlflow.set_tracking_uri("sqlite:///mlflow.db")
+    # mlflow.set_tracking_uri("sqlite:///mlflow.db")
+    mlflow.set_tracking_uri("http://127.0.0.1:5000")
     mlflow.set_experiment("nyc-taxi-experiment")
 
     # Load
@@ -128,4 +130,12 @@ def main_flow(
 
 
 if __name__ == "__main__":
-    main_flow()
+    # main_flow()
+    
+    parser = argparse.ArgumentParser(description="Train the NYC taxi model")
+    parser.add_argument("--train_path", type=str, default="./data/green_tripdata_2021-01.parquet", help="Path to the training data")
+    parser.add_argument("--val_path", type=str, default="./data/green_tripdata_2021-02.parquet", help="Path to the validation data")
+
+    args = parser.parse_args()
+
+    main_flow(args.train_path, args.val_path)
